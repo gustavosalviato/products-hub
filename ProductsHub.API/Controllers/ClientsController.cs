@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
+using ProductsHub.API.UseCases.Clients.GetAll;
 using ProductsHub.API.UseCases.Clients.Register;
 using ProductsHub.Communication.Requests;
 using ProductsHub.Communication.Responses;
@@ -12,7 +12,7 @@ namespace ProductsHub.API.Controllers;
 public class ClientsController : ControllerBase
 {
     [HttpPost]
-    [ProducesResponseType(typeof(ResponseClientJson), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ResponseShortClientJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status400BadRequest)]
     public IActionResult Register([FromBody] ResquestClientJson request)
     {
@@ -32,9 +32,20 @@ public class ClientsController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(typeof(ResponseShortClientJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public IActionResult GetAll()
     {
-        return Ok();
+        var useCase = new GetAllUseCase();
+
+        var response = useCase.Execute();
+
+        if (response.Clients.Count == 0) 
+        {
+            return NoContent();
+        }
+
+        return Ok(response);
     }
 
     [HttpDelete]
