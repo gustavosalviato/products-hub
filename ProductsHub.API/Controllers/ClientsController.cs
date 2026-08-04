@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProductsHub.API.UseCases.Clients.GetAll;
 using ProductsHub.API.UseCases.Clients.Register;
+using ProductsHub.API.UseCases.Clients.Update;
 using ProductsHub.Communication.Requests;
 using ProductsHub.Communication.Responses;
 
@@ -14,7 +15,7 @@ public class ClientsController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(ResponseShortClientJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status400BadRequest)]
-    public IActionResult Register([FromBody] ResquestClientJson request)
+    public IActionResult Register([FromBody] RequestClientJson request)
     {
 
         var useCase = new RegisterClientUseCase();
@@ -26,9 +27,17 @@ public class ClientsController : ControllerBase
     }
 
     [HttpPut]
-    public IActionResult Update()
+    [Route("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status404NotFound)]
+    public IActionResult Update([FromRoute] Guid id, [FromBody] RequestClientJson request)
     {
-        return Ok();
+        var useCase = new UpdateClientUseCase();
+
+        useCase.Execute(id, request);
+
+        return NoContent();
     }
 
     [HttpGet]
@@ -40,7 +49,7 @@ public class ClientsController : ControllerBase
 
         var response = useCase.Execute();
 
-        if (response.Clients.Count == 0) 
+        if (response.Clients.Count == 0)
         {
             return NoContent();
         }

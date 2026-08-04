@@ -9,7 +9,6 @@ public class GetAllUseCase
     {
         var dbContext = new ProductsHubDbContext();
 
-
         var clients = dbContext.Clients.ToList();
 
         return new ResponseAllClientJson
