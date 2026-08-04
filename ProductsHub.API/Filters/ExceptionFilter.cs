@@ -9,23 +9,23 @@ public class ExceptionFilter : IExceptionFilter
 {
     public void OnException(ExceptionContext context)
     {
-        if (context.Exception is ProductsHubException productsHubException) 
+        if (context.Exception is ProductsHubException productsHubException)
         {
 
             context.HttpContext.Response.StatusCode = (int)productsHubException.GetErrorHttpStatusCode();
-            
+
             context.Result = new ObjectResult(new ResponseErrorMessagesJson(productsHubException.GetErrors()));
 
         }
-        else 
+        else
         {
             ThrowUnknowException(context);
         }
     }
 
-    private void ThrowUnknowException(ExceptionContext context) 
+    private void ThrowUnknowException(ExceptionContext context)
     {
         context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
-        context.Result = new ObjectResult(new ResponseErrorMessagesJson("Unknow error."));  
+        context.Result = new ObjectResult(new ResponseErrorMessagesJson("Unknow error."));
     }
 }

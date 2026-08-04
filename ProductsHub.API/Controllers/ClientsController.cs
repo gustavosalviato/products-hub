@@ -12,20 +12,20 @@ namespace ProductsHub.API.Controllers;
 public class ClientsController : ControllerBase
 {
     [HttpPost]
-    [ProducesResponseType(typeof (ResponseClientJson), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ResponseClientJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status400BadRequest)]
     public IActionResult Register([FromBody] ResquestClientJson request)
     {
-      
+
         var useCase = new RegisterClientUseCase();
 
         var response = useCase.Execute(request);
 
         return Created(string.Empty, response);
-              
+
     }
 
-    [HttpPut]                                                                       
+    [HttpPut]
     public IActionResult Update()
     {
         return Ok();

@@ -14,5 +14,5 @@ public class ErrorOnValidationException : ProductsHubException
 
     public override List<string> GetErrors() => _errors;
 
-    public override HttpStatusCode GetErrorHttpStatusCode()  => HttpStatusCode.BadRequest;
+    public override HttpStatusCode GetErrorHttpStatusCode() => HttpStatusCode.BadRequest;
 }
