@@ -12,7 +12,7 @@ public class ProductsHubDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite("Data Source=C:\\WorkSpace\\ProductsHub.db");
+        optionsBuilder.UseSqlite("Data Source=C:\\WorkSpace\\DB.db");
 
     }
 
