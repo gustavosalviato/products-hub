@@ -31,6 +31,7 @@ public class ClientsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status400BadRequest)]
     public IActionResult Update([FromRoute] Guid id, [FromBody] RequestClientJson request)
     {
         var useCase = new UpdateClientUseCase();
@@ -65,7 +66,7 @@ public class ClientsController : ControllerBase
 
     [HttpGet]
     [Route("{id}")]
-    public IActionResult GetById([FromRoute] Guid id)
+    public IActionResult GetById([FromRoute] Guid id)                                                                           
     {
         return Ok();
     }
