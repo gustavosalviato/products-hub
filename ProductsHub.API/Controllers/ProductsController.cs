@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProductsHub.API.UseCases.Clients.GetAll;
+using ProductsHub.API.UseCases.Products.DeleteProduct;
 using ProductsHub.API.UseCases.Products.Register;
 using ProductsHub.Communication.Requests;
 using ProductsHub.Communication.Responses;
@@ -42,5 +42,18 @@ public class ProductsController : ControllerBase
         //}
 
         return Ok();
+    }
+
+    [HttpDelete]
+    [Route("{productId}")]
+    [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status204NoContent)]
+    public IActionResult Delete([FromRoute] Guid productId)
+    {
+        var useCase = new DeleteProductUseCase();
+
+        useCase.Execute(productId);
+
+        return NoContent();
     }
 }
