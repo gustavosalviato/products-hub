@@ -3,7 +3,7 @@
 public class Client : EntityBase
 {
     public String Name { get; set; } = String.Empty;
-
     public String Email { get; set; } = String.Empty;
+    public List<Product> Products { get; set; } = [];
 
 }
